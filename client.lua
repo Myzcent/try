@@ -136,18 +136,17 @@ RegisterNUICallback('fallback', function(data, cb)
     print("[AnimalFarm] NUI fallback callback triggered")
 end)
 
--- 🔹 ESC key handler to force close NUI
+-- 🔹 ESC key handler to force close NUI (Fixed - no GetNuiFocus)
 CreateThread(function()
     while true do
         Wait(0)
         if IsControlJustPressed(0, 322) then -- ESC key
-            local hasFocus, hasKeepInput = GetNuiFocus()
-            if hasFocus then
-                SetNuiFocus(false, false)
-                SetNuiFocusKeepInput(false)
-                SendNUIMessage({ action = 'closeAnimalMenu' })
-                print("[AnimalFarm] NUI closed via ESC key")
-            end
+            -- Force close NUI without checking focus state
+            SetNuiFocus(false, false)
+            SetNuiFocusKeepInput(false)
+            SendNUIMessage({ action = 'closeAnimalMenu' })
+            VendorMenuOpen = false
+            print("[AnimalFarm] NUI closed via ESC key")
         end
     end
 end)
@@ -166,17 +165,17 @@ RegisterCommand('resetnuifocus', function()
     print("NUI focus reset manually - all attempts made")
 end, false)
 
--- 🔹 NUI state monitoring system
+-- 🔹 NUI state monitoring system (Fixed - removed GetNuiFocus)
 CreateThread(function()
     while true do
-        Wait(5000) -- Check every 5 seconds
+        Wait(10000) -- Check every 10 seconds
         
-        local hasFocus, hasKeepInput = GetNuiFocus()
-        
-        -- If NUI has focus but no menu is supposed to be open, force close it
-        if hasFocus and not VendorMenuOpen then
-            print("[AnimalFarm] WARNING: NUI focus detected without active menu - forcing close")
-            SafeSetNuiFocus(false, false)
+        -- Periodic NUI cleanup to prevent stuck states
+        -- This runs less frequently to avoid performance issues
+        if not VendorMenuOpen then
+            -- Force close NUI if no menus should be open
+            SetNuiFocus(false, false)
+            SetNuiFocusKeepInput(false)
             SendNUIMessage({ action = "closeAnimalMenu" })
         end
     end
@@ -778,7 +777,7 @@ function OpenVendorMenu()
             onSelect = function()
                 if not disabled then
                     TriggerServerEvent("animalfarm:buyAnimal", animalType)
-                    ox_lib:hideContext()
+                    exports.ox_lib:hideContext()
                     VendorMenuOpen = false
                 end
             end
@@ -790,18 +789,18 @@ function OpenVendorMenu()
         title = "Close",
         icon = "x",
         onSelect = function()
-            ox_lib:hideContext()
+            exports.ox_lib:hideContext()
             VendorMenuOpen = false
         end
     }
 
-    ox_lib:registerContext({
+    exports.ox_lib:registerContext({
         id = "vendor_menu",
         title = "🐄 Animal Vendor",
         options = options
     })
 
-    ox_lib:showContext("vendor_menu")
+    exports.ox_lib:showContext("vendor_menu")
     VendorMenuOpen = true
 end
 
@@ -812,7 +811,7 @@ RegisterNetEvent('animalfarm:updateStock', function(animalType, newStock)
     if not animalType then return end
     GlobalAnimalStock[animalType] = newStock
     if VendorMenuOpen then
-        ox_lib:hideContext('vendor_menu')
+        exports.ox_lib:hideContext('vendor_menu')
         OpenVendorMenu()
     end
 end)
