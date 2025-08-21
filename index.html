@@ -3,9 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Pet Care Status</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>MYCENT CEPEDA</h1>
+    <div class="container">
+        <div class="pet-status">
+            <h1>🐾 Pet Status</h1>
+            
+            <!-- Status Bars -->
+            <div class="status-section">
+                <div class="status-item">
+                    <label>Health</label>
+                    <div class="status-bar">
+                        <div class="status-fill health-fill" id="health-bar"></div>
+                        <span class="status-text" id="health-text">100%</span>
+                    </div>
+                </div>
+                
+                <div class="status-item">
+                    <label>Hungry</label>
+                    <div class="status-bar">
+                        <div class="status-fill hungry-fill" id="hungry-bar"></div>
+                        <span class="status-text" id="hungry-text">0%</span>
+                    </div>
+                </div>
+                
+                <div class="status-item">
+                    <label>Thirsty</label>
+                    <div class="status-bar">
+                        <div class="status-fill thirsty-fill" id="thirsty-bar"></div>
+                        <span class="status-text" id="thirsty-text">0%</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level and Experience -->
+            <div class="level-section">
+                <div class="level-info">
+                    <h2>Level <span id="level">1</span></h2>
+                    <div class="exp-container">
+                        <label>Experience</label>
+                        <div class="exp-bar">
+                            <div class="exp-fill" id="exp-bar"></div>
+                            <span class="exp-text" id="exp-text">0 / 100</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upcoming Events -->
+            <div class="upcoming-section">
+                <h3>Upcoming</h3>
+                <div class="upcoming-list" id="upcoming-list">
+                    <div class="upcoming-item">🍽️ Next meal in 2 hours</div>
+                    <div class="upcoming-item">🚿 Bath time in 4 hours</div>
+                    <div class="upcoming-item">🎾 Play time in 6 hours</div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="actions-section">
+                <button class="action-btn feed-btn" id="feed-btn">
+                    🍖 Feed
+                </button>
+                <button class="action-btn water-btn" id="water-btn">
+                    💧 Water
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
