@@ -1,4 +1,4 @@
-local QBCore = exports.qbx_core:GetCoreObject()
+local QBCore = exports['qb-core']:GetCoreObject()
 
 -- Check production requirements
 local function CheckProductionRequirements(animalData, animalConfig)
@@ -60,7 +60,7 @@ end
 -- Collect products event
 RegisterNetEvent('animal_farming:server:collectProducts', function(animalId)
     local src = source
-    local Player = exports.qbx_core:GetPlayer(src)
+    local Player = QBCore.Functions.GetPlayer(src)
     
     if not Player then return end
     
@@ -161,7 +161,7 @@ end)
 -- Get production status for an animal
 RegisterNetEvent('animal_farming:server:getProductionStatus', function(animalId)
     local src = source
-    local Player = exports.qbx_core:GetPlayer(src)
+    local Player = QBCore.Functions.GetPlayer(src)
     
     if not Player then return end
     

@@ -1,4 +1,4 @@
-# 🐄 Animal Farming Script for QBX Framework
+# 🐄 Animal Farming Script for QB-Core Framework
 
 A comprehensive animal farming system that allows players to purchase farmlots, raise animals, and manage their livestock with realistic stats, gender systems, and production mechanics.
 
@@ -114,7 +114,7 @@ Edit `shared/config.lua` to customize:
 - **ox_target** → Interaction system
 - **ox_inventory** → Item management
 - **oxmysql** → Database operations
-- **qbx_core** → QBX framework
+- **qb-core** → QB-Core framework
 
 ## 🗄️ Database Tables
 
@@ -225,8 +225,8 @@ Config.Butchering = {
 
 ## 🔧 Framework Compatibility
 
-Designed specifically for **QBX framework** using:
-- `exports.qbx_core:GetPlayer(src)` → Player data
+Designed specifically for **QB-Core framework** using:
+- `exports.qb-core:GetPlayer(src)` → Player data
 - `player.Functions.RemoveMoney('cash', amount)` → Transactions
 - `exports.ox_inventory:AddItem/RemoveItem` → Inventory management
 - `player.PlayerData.citizenid` → Player identification

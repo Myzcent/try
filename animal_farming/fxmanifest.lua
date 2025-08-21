@@ -2,7 +2,7 @@ fx_version 'cerulean'
 game 'gta5'
 
 name 'animal_farming'
-description 'Advanced Animal Farming System for QBX'
+description 'Advanced Animal Farming System for QB-Core'
 author 'YourName'
 version '1.0.0'
 
@@ -36,5 +36,5 @@ dependencies {
     'ox_target',
     'ox_inventory',
     'oxmysql',
-    'qbx_core'
+    'qb-core'
 }

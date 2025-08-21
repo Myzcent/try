@@ -1,4 +1,4 @@
-local QBCore = exports.qbx_core:GetCoreObject()
+local QBCore = exports['qb-core']:GetCoreObject()
 
 -- Local variables
 local spawnedAnimals = {} -- [animalId] = {entity, data}
@@ -151,7 +151,7 @@ end)
 -- Purchase animal event
 RegisterNetEvent('animal_farming:server:purchaseAnimal', function(animalType, lotId)
     local src = source
-    local Player = exports.qbx_core:GetPlayer(src)
+    local Player = QBCore.Functions.GetPlayer(src)
     
     if not Player then return end
     
@@ -286,7 +286,7 @@ end)
 -- Player loaded - spawn their animals
 RegisterNetEvent('animal_farming:server:playerLoaded', function()
     local src = source
-    local Player = exports.qbx_core:GetPlayer(src)
+    local Player = QBCore.Functions.GetPlayer(src)
     
     if not Player then return end
     
@@ -325,7 +325,7 @@ end)
 -- Feed animal event
 RegisterNetEvent('animal_farming:server:feedAnimal', function(animalId)
     local src = source
-    local Player = exports.qbx_core:GetPlayer(src)
+    local Player = QBCore.Functions.GetPlayer(src)
     
     if not Player then return end
     

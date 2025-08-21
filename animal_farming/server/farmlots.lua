@@ -1,4 +1,4 @@
-local QBCore = exports.qbx_core:GetCoreObject()
+local QBCore = exports['qb-core']:GetCoreObject()
 
 -- Initialize farmlots table
 local farmlots = {}
@@ -52,7 +52,7 @@ end
 -- Purchase farmlot event
 RegisterNetEvent('animal_farming:server:purchaseFarmlot', function(lotId)
     local src = source
-    local Player = exports.qbx_core:GetPlayer(src)
+    local Player = QBCore.Functions.GetPlayer(src)
     
     if not Player then return end
     
@@ -161,7 +161,7 @@ end)
 -- Get farmlot info event
 RegisterNetEvent('animal_farming:server:getFarmlotInfo', function(lotId)
     local src = source
-    local Player = exports.qbx_core:GetPlayer(src)
+    local Player = QBCore.Functions.GetPlayer(src)
     
     if not Player then return end
     
@@ -193,7 +193,7 @@ end)
 -- Get player farmlots event
 RegisterNetEvent('animal_farming:server:getPlayerFarmlots', function()
     local src = source
-    local Player = exports.qbx_core:GetPlayer(src)
+    local Player = QBCore.Functions.GetPlayer(src)
     
     if not Player then return end
     
@@ -211,7 +211,7 @@ exports('CountPlayerFarmlots', CountPlayerFarmlots)
 -- Player disconnect cleanup (animals will be handled separately)
 AddEventHandler('playerDropped', function()
     local src = source
-    local Player = exports.qbx_core:GetPlayer(src)
+    local Player = QBCore.Functions.GetPlayer(src)
     
     if Player then
         local citizenid = Player.PlayerData.citizenid

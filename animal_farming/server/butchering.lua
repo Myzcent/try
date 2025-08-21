@@ -1,4 +1,4 @@
-local QBCore = exports.qbx_core:GetCoreObject()
+local QBCore = exports['qb-core']:GetCoreObject()
 
 -- Calculate butcher yield based on animal level and success rate
 local function CalculateButcherYield(animalData, animalConfig, successRate)
@@ -21,7 +21,7 @@ end
 -- Butcher animal event
 RegisterNetEvent('animal_farming:server:butcherAnimal', function(animalId)
     local src = source
-    local Player = exports.qbx_core:GetPlayer(src)
+    local Player = QBCore.Functions.GetPlayer(src)
     
     if not Player then return end
     
@@ -106,7 +106,7 @@ end)
 -- Handle butchering result
 RegisterNetEvent('animal_farming:server:butcheringResult', function(animalId, success, successRate)
     local src = source
-    local Player = exports.qbx_core:GetPlayer(src)
+    local Player = QBCore.Functions.GetPlayer(src)
     
     if not Player then return end
     
