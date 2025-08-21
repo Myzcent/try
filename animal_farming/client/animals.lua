@@ -11,6 +11,15 @@ RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     TriggerServerEvent('animal_farming:server:playerLoaded')
 end)
 
+-- Also initialize when resource starts (for already loaded players)
+CreateThread(function()
+    Wait(2000) -- Wait for everything to load
+    if LocalPlayer.state.isLoggedIn then
+        CreateAnimalVendorNPC()
+        TriggerServerEvent('animal_farming:server:playerLoaded')
+    end
+end)
+
 -- Create animal vendor NPC
 function CreateAnimalVendorNPC()
     if animalVendorNPC and DoesEntityExist(animalVendorNPC) then
@@ -19,18 +28,40 @@ function CreateAnimalVendorNPC()
     
     CreateThread(function()
         local vendor = Config.AnimalVendor
+        local modelHash = GetHashKey(vendor.model)
         
         -- Request model
-        RequestModel(vendor.model)
-        while not HasModelLoaded(vendor.model) do
+        RequestModel(modelHash)
+        local timeout = 0
+        while not HasModelLoaded(modelHash) and timeout < 100 do
             Wait(100)
+            timeout = timeout + 1
+        end
+        
+        if not HasModelLoaded(modelHash) then
+            print('^1[Animal Farming]^0 Failed to load animal vendor model: ' .. vendor.model)
+            return
         end
         
         -- Create NPC
-        animalVendorNPC = CreatePed(4, vendor.model, vendor.coords.x, vendor.coords.y, vendor.coords.z - 1.0, vendor.coords.w, false, true)
+        animalVendorNPC = CreatePed(4, modelHash, vendor.coords.x, vendor.coords.y, vendor.coords.z, vendor.coords.w, false, true)
+        
+        if not DoesEntityExist(animalVendorNPC) then
+            print('^1[Animal Farming]^0 Failed to create animal vendor NPC')
+            SetModelAsNoLongerNeeded(modelHash)
+            return
+        end
+        
         SetEntityInvincible(animalVendorNPC, true)
         FreezeEntityPosition(animalVendorNPC, true)
         SetBlockingOfNonTemporaryEvents(animalVendorNPC, true)
+        SetPedDiesWhenInjured(animalVendorNPC, false)
+        SetPedCanPlayAmbientAnims(animalVendorNPC, true)
+        SetPedCanRagdollFromPlayerImpact(animalVendorNPC, false)
+        SetEntityCanBeDamaged(animalVendorNPC, false)
+        
+        -- Set model as no longer needed
+        SetModelAsNoLongerNeeded(modelHash)
         
         -- Add ox_target interaction
         exports.ox_target:addLocalEntity(animalVendorNPC, {
@@ -527,6 +558,22 @@ RegisterNetEvent('animal_farming:client:removeAnimal', function(animalId)
         print('^2[Animal Farming]^0 Removed animal: ' .. animalId)
     end
 end)
+
+-- Debug command to manually create animal vendor NPC
+RegisterCommand('createanimal_vendor', function()
+    print('^2[Animal Farming]^0 Manually creating animal vendor NPC...')
+    CreateAnimalVendorNPC()
+end, false)
+
+-- Debug command to check animal vendor status
+RegisterCommand('checkanimal_vendor', function()
+    if animalVendorNPC and DoesEntityExist(animalVendorNPC) then
+        local coords = GetEntityCoords(animalVendorNPC)
+        print('^2[Animal Farming]^0 Animal vendor NPC exists at: ' .. coords.x .. ', ' .. coords.y .. ', ' .. coords.z)
+    else
+        print('^1[Animal Farming]^0 Animal vendor NPC does not exist')
+    end
+end, false)
 
 -- Cleanup on resource stop
 AddEventHandler('onResourceStop', function(resourceName)

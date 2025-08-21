@@ -10,6 +10,15 @@ RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     CreateFarmlotNPCs()
 end)
 
+-- Also initialize when resource starts (for already loaded players)
+CreateThread(function()
+    Wait(1000) -- Wait for everything to load
+    if LocalPlayer.state.isLoggedIn then
+        TriggerServerEvent('animal_farming:server:getPlayerFarmlots')
+        CreateFarmlotNPCs()
+    end
+end)
+
 -- Update player farmlots
 RegisterNetEvent('animal_farming:client:updateFarmlots', function(farmlots)
     playerFarmlots = farmlots
@@ -38,19 +47,42 @@ function CreateFarmlotNPCs()
         local lot = Config.Farmlots[i]
         
         CreateThread(function()
+            local modelHash = GetHashKey(lot.npc.model)
+            
             -- Request model
-            RequestModel(lot.npc.model)
-            while not HasModelLoaded(lot.npc.model) do
+            RequestModel(modelHash)
+            local timeout = 0
+            while not HasModelLoaded(modelHash) and timeout < 100 do
                 Wait(100)
+                timeout = timeout + 1
+            end
+            
+            if not HasModelLoaded(modelHash) then
+                print('^1[Animal Farming]^0 Failed to load model: ' .. lot.npc.model)
+                return
             end
             
             -- Create NPC
-            local npc = CreatePed(4, lot.npc.model, lot.npc.coords.x, lot.npc.coords.y, lot.npc.coords.z - 1.0, lot.npc.coords.w, false, true)
+            local npc = CreatePed(4, modelHash, lot.npc.coords.x, lot.npc.coords.y, lot.npc.coords.z, lot.npc.coords.w, false, true)
+            
+            if not DoesEntityExist(npc) then
+                print('^1[Animal Farming]^0 Failed to create NPC for lot: ' .. lot.id)
+                SetModelAsNoLongerNeeded(modelHash)
+                return
+            end
+            
             SetEntityInvincible(npc, true)
             FreezeEntityPosition(npc, true)
             SetBlockingOfNonTemporaryEvents(npc, true)
+            SetPedDiesWhenInjured(npc, false)
+            SetPedCanPlayAmbientAnims(npc, true)
+            SetPedCanRagdollFromPlayerImpact(npc, false)
+            SetEntityCanBeDamaged(npc, false)
             
             farmlotNPCs[#farmlotNPCs + 1] = npc
+            
+            -- Set model as no longer needed
+            SetModelAsNoLongerNeeded(modelHash)
             
             -- Add ox_target interaction
             exports.ox_target:addLocalEntity(npc, {
@@ -185,6 +217,27 @@ exports('PlayerOwnsLot', PlayerOwnsLot)
 exports('GetFarmlotById', GetFarmlotById)
 exports('IsWithinFarmlotBoundaries', IsWithinFarmlotBoundaries)
 exports('GetPlayerFarmlots', function() return playerFarmlots end)
+
+-- Debug command to manually create NPCs
+RegisterCommand('createfarmlot_npcs', function()
+    print('^2[Animal Farming]^0 Manually creating farmlot NPCs...')
+    CreateFarmlotNPCs()
+end, false)
+
+-- Debug command to check NPC status
+RegisterCommand('checkfarmlot_npcs', function()
+    print('^2[Animal Farming]^0 Checking farmlot NPCs status:')
+    for i = 1, #farmlotNPCs do
+        local npc = farmlotNPCs[i]
+        if DoesEntityExist(npc) then
+            local coords = GetEntityCoords(npc)
+            print('^2[Animal Farming]^0 NPC ' .. i .. ' exists at: ' .. coords.x .. ', ' .. coords.y .. ', ' .. coords.z)
+        else
+            print('^1[Animal Farming]^0 NPC ' .. i .. ' does not exist')
+        end
+    end
+    print('^2[Animal Farming]^0 Total NPCs: ' .. #farmlotNPCs)
+end, false)
 
 -- Cleanup on resource stop
 AddEventHandler('onResourceStop', function(resourceName)

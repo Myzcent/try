@@ -1,7 +1,7 @@
 Config = {}
 
 -- Debug mode
-Config.Debug = false
+Config.Debug = true
 
 -- General Settings
 Config.MaxFarmlotsPerPlayer = 0 -- 0 = unlimited
@@ -64,7 +64,7 @@ Config.Farmlots = {
             max = vector3(2455.0, 4975.0, 55.0)
         },
         npc = {
-            model = 'a_m_m_farmer_01',
+            model = 's_m_m_farmer_01', -- Different model to test
             coords = vector4(2447.3, 4968.5, 51.7, 180.0)
         }
     },
@@ -94,7 +94,7 @@ Config.Farmlots = {
             max = vector3(2468.0, 4963.0, 55.0)
         },
         npc = {
-            model = 'a_m_m_farmer_01',
+            model = 'cs_old_man1a', -- Different model to test
             coords = vector4(2460.7, 4955.3, 51.6, 270.0)
         }
     }
@@ -102,7 +102,7 @@ Config.Farmlots = {
 
 -- Animal Vendor NPC
 Config.AnimalVendor = {
-    model = 'a_m_m_farmer_01',
+    model = 's_m_m_trucker_01', -- Different model to test
     coords = vector4(2472.5, 4942.1, 51.7, 45.0),
     label = 'Animal Vendor'
 }
