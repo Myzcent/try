@@ -12,7 +12,9 @@ shared_scripts {
 }
 
 client_scripts {
-    'client/*.lua'
+    'client/farmlots.lua',
+    'client/animals.lua',
+    'client/test_systems.lua'  -- Temporary test file
 }
 
 server_scripts {
