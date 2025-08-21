@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal Stats</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div id="animalStatsContainer" class="stats-container hidden">
+        <div class="stats-panel">
+            <div class="panel-header">
+                <h2 id="animalTitle">Animal Stats</h2>
+                <button id="closeBtn" class="close-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="panel-content">
+                <div class="animal-info">
+                    <div class="info-row">
+                        <span class="info-label">Type:</span>
+                        <span id="animalType" class="info-value">-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Gender:</span>
+                        <span id="animalGender" class="info-value">-</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Level:</span>
+                        <span id="animalLevel" class="info-value">-</span>
+                    </div>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-header">
+                            <i class="fas fa-heart stat-icon health"></i>
+                            <span class="stat-label">Health</span>
+                        </div>
+                        <div class="stat-bar">
+                            <div id="healthBar" class="stat-fill health"></div>
+                        </div>
+                        <span id="healthValue" class="stat-value">100/100</span>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <div class="stat-header">
+                            <i class="fas fa-utensils stat-icon hunger"></i>
+                            <span class="stat-label">Hunger</span>
+                        </div>
+                        <div class="stat-bar">
+                            <div id="hungerBar" class="stat-fill hunger"></div>
+                        </div>
+                        <span id="hungerValue" class="stat-value">100/100</span>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <div class="stat-header">
+                            <i class="fas fa-tint stat-icon thirst"></i>
+                            <span class="stat-label">Thirst</span>
+                        </div>
+                        <div class="stat-bar">
+                            <div id="thirstBar" class="stat-fill thirst"></div>
+                        </div>
+                        <span id="thirstValue" class="stat-value">100/100</span>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <div class="stat-header">
+                            <i class="fas fa-star stat-icon experience"></i>
+                            <span class="stat-label">Experience</span>
+                        </div>
+                        <div class="stat-bar">
+                            <div id="experienceBar" class="stat-fill experience"></div>
+                        </div>
+                        <span id="experienceValue" class="stat-value">0/100</span>
+                    </div>
+                </div>
+                
+                <div class="production-info">
+                    <div class="info-row">
+                        <span class="info-label">Last Fed:</span>
+                        <span id="lastFed" class="info-value">Never</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Last Production:</span>
+                        <span id="lastProduction" class="info-value">Never</span>
+                    </div>
+                    <div class="info-row production-ready" id="productionStatus" style="display: none;">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Ready for production!</span>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button id="feedBtn" class="action-btn feed-btn">
+                        <i class="fas fa-apple-alt"></i>
+                        Feed Animal
+                    </button>
+                    <button id="collectBtn" class="action-btn collect-btn">
+                        <i class="fas fa-hand-holding"></i>
+                        Collect Products
+                    </button>
+                    <button id="butcherBtn" class="action-btn butcher-btn" style="display: none;">
+                        <i class="fas fa-cut"></i>
+                        Butcher Animal
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
