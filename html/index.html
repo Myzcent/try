@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal Farm Management</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Animal Menu Modal -->
+    <div id="animalMenu" class="modal hidden">
+        <div class="modal-content">
+            <!-- Header -->
+            <div class="modal-header">
+                <div class="animal-icon">
+                    <i class="fas fa-paw"></i>
+                </div>
+                <h2 id="animalTitle">Animal Status</h2>
+                <button class="close-btn" id="closeBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <!-- Animal Info Section -->
+            <div class="animal-info">
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-tag"></i>
+                        </div>
+                        <div class="info-content">
+                            <span class="info-label">Type</span>
+                            <span class="info-value" id="animalType">Cow</span>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="info-icon gender-icon">
+                            <i class="fas fa-venus-mars"></i>
+                        </div>
+                        <div class="info-content">
+                            <span class="info-label">Gender</span>
+                            <span class="info-value" id="animalGender">Female</span>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="info-content">
+                            <span class="info-label">Age</span>
+                            <span class="info-value" id="animalAge">2 Years</span>
+                        </div>
+                    </div>
+
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="info-content">
+                            <span class="info-label">Despawn</span>
+                            <span class="info-value" id="despawnTime">60 min</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Status Bars Section -->
+            <div class="status-section">
+                <h3>Health Status</h3>
+                
+                <!-- Hunger Bar -->
+                <div class="status-bar-container">
+                    <div class="status-bar-header">
+                        <i class="fas fa-utensils"></i>
+                        <span>Hunger</span>
+                        <span class="status-value" id="hungerValue">75%</span>
+                    </div>
+                    <div class="status-bar">
+                        <div class="status-fill hunger-fill" id="hungerBar" style="width: 75%"></div>
+                    </div>
+                </div>
+
+                <!-- Water Bar -->
+                <div class="status-bar-container">
+                    <div class="status-bar-header">
+                        <i class="fas fa-tint"></i>
+                        <span>Water</span>
+                        <span class="status-value" id="waterValue">60%</span>
+                    </div>
+                    <div class="status-bar">
+                        <div class="status-fill water-fill" id="waterBar" style="width: 60%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Ready Section -->
+            <div class="product-section" id="productSection">
+                <div class="product-ready" id="productReady">
+                    <div class="product-icon">
+                        <i class="fas fa-cow"></i>
+                    </div>
+                    <div class="product-info">
+                        <h4>Milk Ready!</h4>
+                        <p>This animal is ready for milk collection</p>
+                    </div>
+                    <div class="product-status">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="action-btn feed-btn" id="feedBtn">
+                    <i class="fas fa-carrot"></i>
+                    <span>Feed Animal</span>
+                </button>
+                
+                <button class="action-btn milk-btn" id="milkBtn">
+                    <i class="fas fa-cow"></i>
+                    <span>Collect Milk</span>
+                </button>
+                
+                <button class="action-btn info-btn" id="infoBtn">
+                    <i class="fas fa-info-circle"></i>
+                    <span>More Info</span>
+                </button>
+            </div>
+
+            <!-- Footer -->
+            <div class="modal-footer">
+                <div class="animal-id">
+                    <span>ID: <span id="animalId">#140</span></span>
+                </div>
+                <div class="last-updated">
+                    <span>Last Updated: <span id="lastUpdated">Just now</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification System -->
+    <div id="notifications" class="notifications-container"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p>Loading...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
